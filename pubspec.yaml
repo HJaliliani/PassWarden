@@ -1,0 +1,29 @@
+name: secure_pass_manager
+description: A zero-knowledge Flutter password manager.
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  # Provides cross-platform crypto (PBKDF2, AES-GCM)
+  cryptography: ^2.7.0
+  # Used to store the encrypted vault locally
+  shared_preferences: ^2.2.2
+  # Used for UI icons
+  cupertino_icons: ^1.0.2
+  # Used for picking import files
+  file_picker: ^8.0.0
+  # Used for saving export files cross-platform
+  file_saver: ^0.2.12
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+
+flutter:
+  uses-material-design: true
