@@ -343,6 +343,27 @@ class _VaultScreenState extends State<VaultScreen> {
     _saveVault();
   }
 
+  Future<void> _copyTotpOnly(dynamic cred) async {
+    final seed = cred['totpSeed'];
+    if (seed == null || seed.toString().isEmpty) return;
+    final code = await TotpEngine.generateCode(seed.toString());
+    await Clipboard.setData(ClipboardData(text: code));
+    if (mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('2FA Code copied!')));
+    }
+  }
+
+  Future<void> _copyPasswordAndTotp(dynamic cred) async {
+    final seed = cred['totpSeed'];
+    final password = cred['password'] ?? '';
+    if (seed == null || seed.toString().isEmpty) return;
+    final code = await TotpEngine.generateCode(seed.toString());
+    await Clipboard.setData(ClipboardData(text: '$password$code'));
+    if (mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Password + 2FA copied!')));
+    }
+  }
+
   Future<String?> _promptForPassword(String title) {
     final controller = TextEditingController();
     return showDialog<String>(
@@ -547,6 +568,18 @@ class _VaultScreenState extends State<VaultScreen> {
                     trailing: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
+                        if (cred['totpSeed'] != null && cred['totpSeed'].toString().isNotEmpty) ...[
+                          IconButton(
+                            icon: const Icon(Icons.timer, color: Colors.greenAccent),
+                            tooltip: 'Copy 2FA Only',
+                            onPressed: () => _copyTotpOnly(cred),
+                          ),
+                          IconButton(
+                            icon: const Icon(Icons.password, color: Colors.orangeAccent),
+                            tooltip: 'Copy Password + 2FA',
+                            onPressed: () => _copyPasswordAndTotp(cred),
+                          ),
+                        ],
                         IconButton(
                           icon: const Icon(Icons.edit, color: Colors.blueAccent),
                           onPressed: () => _editCredential(cred),
