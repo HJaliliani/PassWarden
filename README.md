@@ -1,4 +1,11 @@
 # passwarden
+-Zero-Knowledge Password Manager
+-Strong Encryption
+-TOTP Generation by Seed(Key) of 2fa
+-Edit Saved Records
+-Search to find saved records
+-Export all saved Passwords (Fully  Encrypted)
+-Import encrypted passwords.
 
 A new Flutter project.
 
