@@ -1,7 +1,7 @@
 # passwarden
 -Zero-Knowledge Password Manager
 
--Strong Encryption
+-Strong Encryption : AES-256 & PBKDF2 SHA-256
 
 -TOTP Generation by Seed(Key) of 2fa
 
